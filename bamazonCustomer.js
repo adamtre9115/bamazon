@@ -11,7 +11,7 @@ const connection = mysql.createConnection({
 });
 
 // greet visitor
-console.log("Thank you for visiting Bamazon!");
+console.log("Welcome to Bamazon!");
 
 // display all of the items available for sale
 connection.query(
@@ -20,7 +20,13 @@ connection.query(
         if (err) {
             console.log(err);
         } else {
-            console.log(results); // results contains rows returned by server
+            for (var i = 0; i < results.length; i++) {
+                console.log(
+                    "Product: " + results[i].product_name + "\n" +
+                    " Department: " + results[i].department_name + "\n" +
+                    " Price: $" + results[i].price
+                );
+            } // results contains rows returned by server
         }
 
     }
