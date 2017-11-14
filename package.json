@@ -1,0 +1,23 @@
+{
+  "name": "bamazon",
+  "version": "1.0.0",
+  "description": "mini amazon knock-off using cli",
+  "main": "bamazonCustomer.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adamtre9115/bamazon.git"
+  },
+  "author": "Tresean Adam",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/adamtre9115/bamazon/issues"
+  },
+  "homepage": "https://github.com/adamtre9115/bamazon#readme",
+  "dependencies": {
+    "inquirer": "^4.0.0",
+    "mysql2": "^1.5.0"
+  }
+}
