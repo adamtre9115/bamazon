@@ -29,20 +29,15 @@ function displayItems() {
             if (err) {
                 console.log(err);
             } else {
-                for (var i = 0; i < results.length; i++) {
-                    console.table([{
-                        Item_Id: results[i].item_id,
-                        Product: results[i].product_name,
-                        Department: results[i].department_name,
-                        Price: results[i].price
-                    }])
-                } // results contains rows returned by server
-            }
 
+                console.table(results);
+                questions();
+            } // results contains rows returned by server
         }
+
     );
-    // questions();
 }
+
 displayItems();
 
 function questions() {
