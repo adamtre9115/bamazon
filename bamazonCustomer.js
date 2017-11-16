@@ -42,10 +42,16 @@ displayItems();
 
 function questions() {
     inquirer.prompt([{
-        type: "input",
-        name: "itemInterested",
-        message: "What is the Item ID of the product you're interested in?"
-    }]).then(function () {
+            type: "input",
+            name: "itemInterested",
+            message: "What is the Item ID of the product you would like to purchase?"
+        },
+        {
+            type: "input",
+            name: "itemAmount",
+            message: "How many would you like to purchase?"
+        }
+    ]).then(function (answers) {
         console.log("made it!");
     })
 }
