@@ -10,7 +10,7 @@ USE bamazon;
 -- create products table --
 CREATE TABLE products (
 	item_id INTEGER PRIMARY KEY AUTO_INCREMENT NULL,
-    product_name TEXT VARCHAR(50) NOT NULL,
+    product_name TEXT VARCHAR(40) NOT NULL,
     department_name TEXT NOT NULL,
     price FLOAT NOT NULL,
     stock_quantity INTEGER

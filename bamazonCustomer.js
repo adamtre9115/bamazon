@@ -22,21 +22,35 @@ const connection = mysql.createConnection({
 console.log("Welcome to Bamazon!");
 
 // display all of the items available for sale
-connection.query(
-    "SELECT * FROM products",
-    function (err, results) {
-        if (err) {
-            console.log(err);
-        } else {
-            for (var i = 0; i < results.length; i++) {
-                console.table([{
-                    Item_Id: results[i].item_id,
-                    Product: results[i].product_name,
-                    Department: results[i].department_name,
-                    Price: results[i].price
-                }])
-            } // results contains rows returned by server
-        }
+function displayItems() {
+    connection.query(
+        "SELECT * FROM products",
+        function (err, results) {
+            if (err) {
+                console.log(err);
+            } else {
+                for (var i = 0; i < results.length; i++) {
+                    console.table([{
+                        Item_Id: results[i].item_id,
+                        Product: results[i].product_name,
+                        Department: results[i].department_name,
+                        Price: results[i].price
+                    }])
+                } // results contains rows returned by server
+            }
 
-    }
-);
+        }
+    );
+    // questions();
+}
+displayItems();
+
+function questions() {
+    inquirer.prompt([{
+        type: "input",
+        name: "itemInterested",
+        message: "What is the Item ID of the product you're interested in?"
+    }]).then(function () {
+        console.log("made it!");
+    })
+}
