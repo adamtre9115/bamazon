@@ -18,8 +18,8 @@ const connection = mysql.createConnection({
     database: process.env.DATABASE
 });
 
-// greet visitor
-console.log("Welcome to Bamazon!");
+
+
 
 // display all of the items available for sale
 function displayItems() {
@@ -29,18 +29,18 @@ function displayItems() {
             if (err) {
                 console.log(err);
             } else {
-
+                products = results;
                 console.table(results);
-                questions();
+                promptPurchase();
             } // results contains rows returned by server
         }
 
     );
 }
 
-displayItems();
 
-function questions() {
+
+function promptPurchase() {
     inquirer.prompt([{
             type: "input",
             name: "itemInterested",
@@ -52,6 +52,58 @@ function questions() {
             message: "How many would you like to purchase?"
         }
     ]).then(function (answers) {
-        console.log("made it!");
+        var selectedID = answers.itemInterested;
+        var selectedAmt = answers.itemAmount;
+
+        // search table for selected item
+        connection.query(
+            'SELECT * FROM products WHERE ?', {
+                item_id: selectedID
+            },
+            function (err, data) {
+                if (err) {
+                    console.log(err);
+                }
+                // if item isn't present enter valid item
+                if (data.length === 0) {
+                    console.log("Please enter a valid item");
+                    displayItems();
+
+                    // product is equal to selected item
+                } else {
+                    var productD = data[0];
+                }
+
+                // is there enough in stock
+                if (selectedAmt <= productD.stock_quantity) {
+                    console.log("We have exactly what you're looking for!");
+                    var updateQueryStr = 'UPDATE products SET stock_quantity = ' + (productD.stock_quantity - selectedAmt) + ' WHERE item_id = ' + selectedID;
+
+                    // Update the inventory
+                    connection.query(updateQueryStr, function (err, data) {
+                        if (err) {
+                            console.log(err);
+                        }
+
+                        console.log("We've placed your order! Your total is $" + productD.price * selectedAmt);
+
+                        // End the database connection
+                        connection.end();
+                    })
+                } else {
+                    console.log("I'm sorry to say we just don't have enough right now... Please modify your order.");
+                    displayItems();
+                }
+            }
+        )
     })
 }
+
+function runIt() {
+    // greet visitor
+    console.log("Welcome to Bamazon!");
+
+    displayItems();
+}
+
+runIt();
